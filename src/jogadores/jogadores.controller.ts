@@ -10,7 +10,6 @@ export class JogadoresController {
   @Post()
   async criarAtualizarJogador(@Body() criarJogadorDto: CriarJogadorDto) {
     await this.jogadorService.criarAtualizarJogador(criarJogadorDto);
-    return JSON.stringify({ message: 'sucess' });
   }
 
   @Get()

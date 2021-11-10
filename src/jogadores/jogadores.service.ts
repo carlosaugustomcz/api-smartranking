@@ -14,12 +14,13 @@ export class JogadoresService {
   async criarAtualizarJogador(criarJogadorDto: CriarJogadorDto): Promise<void> {
     const { email } = criarJogadorDto;
 
-    const jogadorEncontrado = this.jogadorEncontrado(email);
+    const jogadorExist = this.jogadorModel.findOne({ email }).exec();
+    console.log(jogadorExist);
 
-    if (jogadorEncontrado) {
-      this.atualizar(criarJogadorDto);
-    } else {
+    if (!jogadorExist) {
       this.criar(criarJogadorDto);
+    } else {
+      this.atualizar(criarJogadorDto);
     }
   }
 
@@ -48,6 +49,7 @@ export class JogadoresService {
 
   private async criar(criarJogadorDto: CriarJogadorDto): Promise<void> {
     const jogadorCriado = new this.jogadorModel(criarJogadorDto);
+    console.log(jogadorCriado);
     await jogadorCriado.save();
   }
 

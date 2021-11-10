@@ -7,10 +7,10 @@ import { JogadoresModule } from './jogadores/jogadores.module';
     MongooseModule.forRoot(
       'mongodb+srv://admin:N6OZYfqbEnLLZ2LI@cluster0.mljtr.mongodb.net/test?retryWrites=true&w=majority',
       {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
+        // useNewUrlParser: true,
+        // useCreateIndex: true,
+        // useUnifiedTopology: true,
+        // useFindAndModify: false,
       },
     ),
     JogadoresModule,
