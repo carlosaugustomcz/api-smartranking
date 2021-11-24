@@ -9,6 +9,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { AtualizarJogadorDto } from './dtos/atualizarJoagador.dto';
 import { CriarJogadorDto } from './dtos/creiaJogador.dto';
 import { Jogador } from './interfaces/jogador.interface';
 import { JogadoresService } from './jogadores.service';
@@ -29,10 +30,10 @@ export class JogadoresController {
   @Put('/:_id')
   @UsePipes(ValidationPipe)
   async atualizarJogador(
-    @Body() criarJogadorDto: CriarJogadorDto,
-    @Param(':_id', JogadoresValidacaoParametrosPipe) _id: string,
+    @Body() atualizarJogadorDto: AtualizarJogadorDto,
+    @Param('_id', JogadoresValidacaoParametrosPipe) _id: string,
   ): Promise<void> {
-    await this.jogadorService.AtualizarJogador(_id, criarJogadorDto);
+    await this.jogadorService.AtualizarJogador(_id, atualizarJogadorDto);
   }
 
   @Get()
@@ -50,7 +51,7 @@ export class JogadoresController {
   @Delete('/:_id')
   async deletarJogador(
     @Param('_id', JogadoresValidacaoParametrosPipe) _id: string,
-  ) {
+  ): Promise<void> {
     await this.jogadorService.deletarJogador(_id);
   }
 }

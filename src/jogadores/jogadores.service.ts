@@ -9,6 +9,7 @@ import { Jogador } from './interfaces/jogador.interface';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { AtualizarJogadorDto } from './dtos/atualizarJoagador.dto';
 
 @Injectable()
 export class JogadoresService {
@@ -32,14 +33,17 @@ export class JogadoresService {
     return await jogadorCriado.save();
   }
 
-  async AtualizarJogador(_id, criarJogadorDto: CriarJogadorDto): Promise<void> {
-    const jogadorExist = await this.jogadorModel.findOne({ _id }).exec();
+  async AtualizarJogador(
+    _id,
+    atualizarJogadorDto: AtualizarJogadorDto,
+  ): Promise<void> {
+    const jogadorExist = await this.buscaJogador(_id);
 
     if (!jogadorExist) {
       throw new NotFoundException(`Jogador com ${_id} não encontrado!`);
     }
     await this.jogadorModel
-      .findOneAndUpdate({ _id }, { $set: criarJogadorDto })
+      .findOneAndUpdate({ _id }, { $set: atualizarJogadorDto })
       .exec();
   }
 
@@ -48,7 +52,7 @@ export class JogadoresService {
   }
 
   async consultarJogadorId(_id: string): Promise<Jogador> {
-    const jogadorEncontrado = await this.jogadorModel.findOne({ _id }).exec();
+    const jogadorEncontrado = await this.buscaJogador(_id);
     if (!jogadorEncontrado) {
       throw new NotFoundException(`Jogador não encontrado`);
     }
@@ -63,5 +67,9 @@ export class JogadoresService {
     }
 
     await this.jogadorModel.deleteOne({ _id }).exec();
+  }
+
+  private buscaJogador(_id: string): Promise<Jogador> {
+    return this.jogadorModel.findOne({ _id }).exec();
   }
 }
